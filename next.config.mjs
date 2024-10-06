@@ -17,20 +17,20 @@ const nextConfig = {
         destination:
           process.env.NODE_ENV === "development"
             ? "http://127.0.0.1:8000/api/py/:path*"
-            : "https://nutri-ai-6.vercel.app/api/py/:path*", // 프로덕션 백엔드 주소로 수정
+            : "/api/py/:path*", // 프로덕션 백엔드 주소로 수정
       },
       {
         source: "/docs",
         destination:
           process.env.NODE_ENV === "development"
-            ? "https://nutri-ai-6.vercel.app/api/py/docs"
+            ? "http://127.0.0.1:8000/api/py/docs"
             : "/api/py/docs",
       },
       {
         source: "/openapi.json",
         destination:
           process.env.NODE_ENV === "development"
-            ? "https://nutri-ai-6.vercel.app/api/py/openapi.json"
+            ? "http://127.0.0.1:8000/api/py/openapi.json"
             : "/api/py/openapi.json",
       },
     ];
