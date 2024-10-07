@@ -48,7 +48,7 @@ export default function RecommendButton({ text }: RecommendButtonProps) {
           : 'bg-gray_100 border-2 border-gray_200 text-gray_500 hover:bg-blue_600 hover:border-[#99B2FF] hover:text-white'
       }`}
     >
-      <p className={`font-medium text-[12px] leading-[14px]`}>
+      <p className="font-medium text-[12px] leading-[14px]">
         {text}
       </p>
     </button>

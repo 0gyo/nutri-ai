@@ -69,7 +69,7 @@ export default function InputButton({ route }: InputButtonProps) {
 
   return (
     <div
-      className="relative flex items-center justify-between w-[672px] h-[60px] px-3 py-2 bg-white rounded-[27px] shadow-[0_0_4px_rgba(70,106,217,0.25)]"
+      className="relative flex items-center justify-between w-[672px] h-[52px] px-3 py-2 bg-white rounded-[27px] shadow-[0_0_4px_rgba(70,106,217,0.25)]"
       style={{
         background: 'linear-gradient(113deg, #99B2FF 0%, #466AD9 50%, #2D458C 100%)',
         padding: '2px',
@@ -106,7 +106,7 @@ export default function InputButton({ route }: InputButtonProps) {
           />)
         }
         <button
-          className="flex justify-center items-center w-[52px] h-[46px] bg-[#3A6BE1] rounded-[30px] mx-2"
+          className="flex justify-center items-center w-[48px] h-[42px] bg-[#3A6BE1] rounded-[30px] mx-1"
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
           onMouseDown={handleMouseDown}

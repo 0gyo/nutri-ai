@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import logo from '@/images/logo.svg';
+import logo4 from '@/images/logo4.svg';
 import homeIcon from '@/images/homeIcon.svg';
 
 export default function Header() {
@@ -9,7 +9,7 @@ export default function Header() {
       {/* 로고 중앙 정렬 및 클릭 시 홈으로 이동 */}
       <div className="flex-1 flex justify-center">
         <Link href="/search">
-          <Image src={logo} alt="NutriAI" className="w-[132px] h-[40px] cursor-pointer" />
+          <Image src={logo4} alt="NutriAI" className="w-[94px] h-[30px] cursor-pointer" />
         </Link>
       </div>
 

@@ -7,9 +7,9 @@ interface BotChatPictureProps {
 
 export default function BotChatPicture({ link }: BotChatPictureProps) {
   return (
-    <div className="flex items-start gap-3 pt-6">
+    <div className="flex items-start gap-3 pt-4">
       {/* Bot Profile as Image */}
-      <div className="relative w-[50px] h-[50px] flex-shrink-0">
+      <div className="relative w-[28px] h-[28px] flex-shrink-0">
         <Image src={botProfile} alt="Bot Profile" className="rounded-full" />
       </div>
 

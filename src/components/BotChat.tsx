@@ -38,14 +38,15 @@ export default function BotChat({ message }: BotChatProps) {
   return (
     <div className="flex items-start gap-3">
       {/* Bot Profile as Image */}
-      <div className="relative w-[50px] h-[50px] flex-shrink-0">
+      <div className="relative w-[28px] h-[28px] flex-shrink-0">
         <Image src={botProfile} alt="Bot Profile" className="rounded-full" />
       </div>
 
       {/* Chat Box */}
-      <div className="flex p-4 gap-2 bg-white border border-[#6892F9] shadow-md rounded-[4px_32px_32px_32px] max-w-[100%]"
+      <div className="flex gap-2 bg-white max-w-[100%]"
       style={{ whiteSpace: "pre-line" }}>
-        <div className="font-medium text-[16px] leading-[28px] text-[#4D4D4D] break-words">
+        <div className="font-medium text-[16px] leading-[28px] text-[#4D4D4D] break-words"
+        style={{ letterSpacing: '-2%' }}>
           <TextWithLinks text={message} />
         </div>
       </div>

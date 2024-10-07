@@ -17,7 +17,7 @@ export default function Popup() {
       ></div>
 
       {/* 블러가 없는 내용 */}
-      <div className="flex flex-col items-start pt-[140px] pl-[320px]">
+      <div className="flex flex-col items-start pt-[148px] pl-[388px]">
         <p className="text-[44px] font-semibold leading-[44px]" style={{ letterSpacing: '-0.02em' }}>
           안녕하세요! <br />
           저는 영양제 추천 AI

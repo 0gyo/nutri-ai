@@ -31,13 +31,13 @@ const config: Config = {
         gray_600: "#7C8394"
       },
       keyframes: {
-        'spin-slow': {
-          '0%': { transform: 'rotate(0deg)' },
-          '100%': { transform: 'rotate(360deg)' },
+        'blink': {
+          '0%, 100%': { opacity: '1' },   // 시작과 끝에 이미지가 보이도록 설정
+          '50%': { opacity: '0' },        // 중간에 사라지도록 설정
         },
       },
       animation: {
-        'spin-slow': 'spin-slow 1.3s linear infinite',
+        'blink': 'blink 1s steps(5, start) infinite', // 깜빡거리는 효과를 1초 간격으로 무한 반복
       },
     },
   },

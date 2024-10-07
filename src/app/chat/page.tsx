@@ -35,7 +35,7 @@ export default function Chat() {
       if (!nickname) {
         nickname = 'none';
       }
-  
+      
       try {
         const requestBody: {user_prompt: string, nickname: string, conversation_id?: string} = {
           user_prompt: message,
@@ -146,7 +146,7 @@ export default function Chat() {
         ref={chatContainerRef}
         className="absolute top-[80px] bottom-[140px] left-0 right-0 flex justify-center overflow-y-scroll overflow-x-hidden p-2 pb-12"
       >
-        <div className="w-[764px] flex flex-col gap-6">
+        <div className="w-[764px] flex flex-col gap-4">
           {/* Render each message */}
           {messages.map((message, index) => (
             <div key={index} className={message.sender === 'user' ? 'self-end' : 'self-start'}>
@@ -156,7 +156,7 @@ export default function Chat() {
                 message.isBotResponding ? (
                   <BotThinking />
                 ) : (
-                  <div className='gap-6'>
+                  <div className='gap-4'>
                     <BotChat message={message.text} />
                     {message.image_link && <BotChatFinalPicture link={message.image_link} />}
                   </div>
