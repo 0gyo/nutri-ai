@@ -11,8 +11,8 @@ export default function Popup() {
         className="absolute inset-0 bg-cover bg-center"
         style={{ 
           backgroundImage: `url(${backgroundPopup.src})`,
-          filter: 'blur(16px)', // 블러 효과 추가
-          zIndex: -1, // 내용이 블러 위에 배치되도록
+          filter: 'blur(16px)',
+          zIndex: -1,
         }}
       ></div>
 

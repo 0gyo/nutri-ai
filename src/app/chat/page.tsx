@@ -8,27 +8,25 @@ import Header from "@/components/Header";
 import UserChat from "@/components/UserChat";
 import BotChat from "@/components/BotChat";
 import BotThinking from "@/components/BotThinking";
+import BotChatFinalPicture from '@/components/BotChatPicture';
 
 export default function Chat() {
-  const [messages, setMessages] = useState<{ sender: 'user' | 'bot', text: string, isBotResponding?: boolean }[]>([]);
+  const [messages, setMessages] = useState<{ sender: 'user' | 'bot', text: string, image_link?: string, isBotResponding?: boolean }[]>([]);
   const [isBotResponding, setIsBotResponding] = useState(false);
   const chatContainerRef = useRef<HTMLDivElement>(null);
+  const hasExecutedRef = useRef(false);
 
   const handleSendMessage = async (message: string) => {
     if (message.trim() !== '') {
-      // 사용자 메시지 추가
       setMessages((prevMessages) => [
         ...prevMessages,
         { sender: 'user', text: message },
-        // 봇의 "생각 중" 메시지 추가
         { sender: 'bot', text: '', isBotResponding: true },
       ]);
   
-      // 봇이 응답 중임을 표시
       setIsBotResponding(true);
   
       let conversation_id = sessionStorage.getItem('conversation_id');
-      // conversation_id가 없으면 null로 설정
       if (!conversation_id) {
         conversation_id = null;
       }
@@ -39,19 +37,12 @@ export default function Chat() {
       }
   
       try {
-        console.log('message:', message);
-        console.log('nickname:', nickname);
-        console.log('conversation_id:', conversation_id);
-        
-        // 요청 바디 생성
         const requestBody: {user_prompt: string, nickname: string, conversation_id?: string} = {
           user_prompt: message,
           nickname: nickname,
-          // conversation_id가 null이 아닐 때만 포함
           ...(conversation_id && { conversation_id: conversation_id }),
         };
         
-        console.log('requestBody:', requestBody);
         const response = await fetch('https://7yjeklbteaxyxviubjjltp7gfe0fdmor.lambda-url.ap-northeast-2.on.aws/conversation', {
           method: 'POST',
           mode: "cors",
@@ -63,20 +54,35 @@ export default function Chat() {
         }
         
         const data = await response.json();
-        console.log('data:', data);
 
         if (data.conversation_id) {
           sessionStorage.setItem('conversation_id', data.conversation_id);
         }
-        
-        setMessages((prevMessages) => {
-          const newMessages = [...prevMessages];
-          newMessages[newMessages.length - 1] = {
-            sender: 'bot',
-            text: data.response,
-          };
-          return newMessages;
-        });
+
+        // 대화가 종료되었을 때, 상품 이미지를 보여준다.
+        if (data.image_link) {
+          sessionStorage.removeItem('conversation_id');
+          conversation_id = null;
+          setMessages((prevMessages) => {
+            const newMessages = [...prevMessages];
+            newMessages[newMessages.length - 1] = {
+              sender: 'bot',
+              text: data.info,
+              image_link: data.image_link
+            };
+
+            return newMessages;
+          });
+        } else {
+          setMessages((prevMessages) => {
+            const newMessages = [...prevMessages];
+            newMessages[newMessages.length - 1] = {
+              sender: 'bot',
+              text: data.response,
+            };
+            return newMessages;
+          });
+        }
       } catch (error) {
         console.error('Error fetching bot response:', error);
         setMessages((prevMessages) => {
@@ -93,16 +99,23 @@ export default function Chat() {
     }
   };
   
-
   useEffect(() => {
-    const storedChat = sessionStorage.getItem('chat');
+    if (!hasExecutedRef.current) {
+      const storedChat = sessionStorage.getItem('chat');
+      
+      let conversation_id = sessionStorage.getItem('conversation_id');
+      if (conversation_id) {
+        sessionStorage.removeItem('conversation_id');
+      }
 
-    if (storedChat) {
-      const sendMessage = async () => {
-        await handleSendMessage(storedChat);
-        sessionStorage.removeItem('chat');
-      };
-      sendMessage();
+      if (storedChat) {
+        const sendMessage = async () => {
+          await handleSendMessage(storedChat);
+          sessionStorage.removeItem('chat');
+        };
+        hasExecutedRef.current = true;
+        sendMessage();
+      }
     }
   }, []);
 
@@ -143,7 +156,10 @@ export default function Chat() {
                 message.isBotResponding ? (
                   <BotThinking />
                 ) : (
-                  <BotChat message={message.text} />
+                  <div className='gap-6'>
+                    <BotChat message={message.text} />
+                    {message.image_link && <BotChatFinalPicture link={message.image_link} />}
+                  </div>
                 )
               )}
             </div>

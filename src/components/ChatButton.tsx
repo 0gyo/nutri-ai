@@ -14,17 +14,16 @@ interface ChatButtonProps {
 export default function ChatButton({ onSendMessage, disabled }: ChatButtonProps) {
   const [buttonState, setButtonState] = useState('default');
   const [inputValue, setInputValue] = useState('');
-  const inputRef = useRef<HTMLInputElement>(null); // input에 대한 참조 생성
+  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    // 일정 주기로 포커스 유지
     const interval = setInterval(() => {
       if (inputRef.current) {
         inputRef.current.focus();
       }
-    }, 100); // 100ms마다 포커스를 설정
+    }, 100);
 
-    return () => clearInterval(interval); // 컴포넌트 언마운트 시 인터벌 해제
+    return () => clearInterval(interval);
   }, []);
 
   const handleClick = () => {
@@ -79,7 +78,7 @@ export default function ChatButton({ onSendMessage, disabled }: ChatButtonProps)
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
           onKeyDown={handleKeyDown}
-          ref={inputRef} // input에 ref를 연결
+          ref={inputRef}
           disabled={disabled}
         />
         <button

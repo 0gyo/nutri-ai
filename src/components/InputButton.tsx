@@ -15,25 +15,26 @@ interface InputButtonProps {
 export default function InputButton({ route }: InputButtonProps) {
   const [buttonState, setButtonState] = useState('default');
   const [inputValue, setInputValue] = useState('');
-  const inputRef = useRef<HTMLInputElement>(null); // input에 대한 참조 생성
+  const inputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
   
   useEffect(() => {
-    // 컴포넌트가 렌더링된 후 input에 자동으로 포커스
     if (inputRef.current) {
       inputRef.current.focus();
     }
-  }, []); // 빈 의존성 배열은 컴포넌트 마운트 시 한 번만 실행됨
+  }, []);
   
   const handleClick = () => {
     if (route === 'popup') {
       sessionStorage.setItem('name', inputValue);
+      if (inputValue === '') {
+        alert('닉네임을 입력해주세요.');
+        return;
+      }
       router.push('/search');
     }
     else {
-      // 세션 스토리지에 데이터 저장
       sessionStorage.setItem('chat', inputValue);
-      // 페이지 이동
       router.push('/chat');
     }
   };
@@ -83,8 +84,7 @@ export default function InputButton({ route }: InputButtonProps) {
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
             onKeyDown={handleKeyDown}
-            ref={inputRef} // input에 ref를 연결
-            className="text-black placeholder-gray_500 text-center font-medium text-[16px] leading-[28px] flex-grow outline-none bg-transparent px-6"
+            className="text-black placeholder-gray_500 text-left placeholder:text-center font-medium text-[16px] leading-[28px] flex-grow outline-none bg-transparent px-6"
           />
         ) : route == 'chat' ? (
           <input
@@ -93,7 +93,6 @@ export default function InputButton({ route }: InputButtonProps) {
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
             onKeyDown={handleKeyDown}
-            ref={inputRef} // input에 ref를 연결
             className="text-black placeholder-gray_500 font-medium text-[16px] leading-[28px] flex-grow outline-none bg-transparent px-6"
           />
         ) : (
@@ -103,7 +102,6 @@ export default function InputButton({ route }: InputButtonProps) {
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
             onKeyDown={handleKeyDown}
-            ref={inputRef} // input에 ref를 연결
             className="text-black placeholder-gray_500 font-medium text-[16px] leading-[28px] flex-grow outline-none bg-transparent px-6"
           />)
         }
