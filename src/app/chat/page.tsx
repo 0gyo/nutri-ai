@@ -103,7 +103,7 @@ export default function Chat() {
     if (!hasExecutedRef.current) {
       const storedChat = sessionStorage.getItem('chat');
       
-      let conversation_id = sessionStorage.getItem('conversation_id');
+      const conversation_id = sessionStorage.getItem('conversation_id');
       if (conversation_id) {
         sessionStorage.removeItem('conversation_id');
       }
